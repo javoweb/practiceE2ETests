@@ -46,7 +46,42 @@ describe('Ghost', () => {
             })
             it('Start Invalid Post', () => {
                 cy.get('a[title="New post"').click()
-                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Testjckdksajsdkjasdjksdavjkasddvjkasdvkjnasdvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvalksdca')
+                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Test')
+                cy.get('.koenig-editor__editor.__mobiledoc-editor').type('t')
+            })
+            it('Continue Invalid Post', () => {
+                cy.get('a[href="#/posts/"]').first().click()
+                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+                cy.get('.koenig-editor__editor.__mobiledoc-editor').clear().type('test')
+                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Testjckdksajsdkjasdjkdfskjbsdfkvbjsdnfvnjsdkjfvbhsbdd;aksdcn;jabsdckjl; klvcn lksndc ;lnxsdavjkasddvjkasdvkjnasjew;jvnw;jvnd;wkldsnvkdnsf;vlnfjdv;sdjfvn;sdjf vnsdjndvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvadsf vsdv sdv sdf vsdf gfs fdtgerynhglksdca')
+                cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
+                cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
+                cy.get('.gh-alert-content').then(($title) => {
+                    expect($title.get(0).innerText).to.include('Saving failed')
+                })
+            })
+        })
+        context('Edit Post', () => {
+            beforeEach(() => {
+                cy.get('a.ember-view[title="Published"]').click()
+            })
+            it('Edit Valid Post', () => {
+                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+                cy.get('.koenig-editor__editor.__mobiledoc-editor').clear().type('edited test')
+                cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
+                cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
+                cy.get('.gh-notification-title').then(($title) => {
+                    expect($title.get(0).innerText).to.include('Updated')
+                })
+            })
+            it('Edit Invalid Post', () => {
+                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Testjckdksajsdkjasdjkdfskjbsdfkvbjsdnfvnjsdkjfvbhsbdd;aksdcn;jabsdckjl; klvcn lksndc ;lnxsdavjkasddvjkasdvkjnasjew;jvnw;jvnd;wkldsnvkdnsf;vlnfjdv;sdjfvn;sdjf vnsdjndvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvadsf vsdv sdv sdf vsdf gfs fdtgerynhglksdca')
+                cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
+                cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
+                cy.get('.gh-alert-content').then(($title) => {
+                    expect($title.get(0).innerText).to.include('Update failed')
+                })
             })
         })
     })
