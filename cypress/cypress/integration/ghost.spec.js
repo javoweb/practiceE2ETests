@@ -64,9 +64,9 @@ describe('Ghost', () => {
         context('Edit Post', () => {
             beforeEach(() => {
                 cy.get('a.ember-view[title="Published"]').click()
+                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
             })
             it('Edit Valid Post', () => {
-                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
                 cy.get('.koenig-editor__editor.__mobiledoc-editor').clear().type('edited test')
                 cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
                 cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
@@ -75,13 +75,29 @@ describe('Ghost', () => {
                 })
             })
             it('Edit Invalid Post', () => {
-                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
                 cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Testjckdksajsdkjasdjkdfskjbsdfkvbjsdnfvnjsdkjfvbhsbdd;aksdcn;jabsdckjl; klvcn lksndc ;lnxsdavjkasddvjkasdvkjnasjew;jvnw;jvnd;wkldsnvkdnsf;vlnfjdv;sdjfvn;sdjf vnsdjndvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvadsf vsdv sdv sdf vsdf gfs fdtgerynhglksdca')
                 cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
                 cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
                 cy.get('.gh-alert-content').then(($title) => {
                     expect($title.get(0).innerText).to.include('Update failed')
                 })
+            })
+        })
+        context('Delete Post', () => {
+            beforeEach(() => {
+                cy.get('a.ember-view[title="Published"]').click()
+                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+            })
+            it('Cancel Delete Post', () => {
+                cy.get('button.post-settings').click()
+                cy.get('button.gh-btn.gh-btn-hover-red.gh-btn-icon.settings-menu-delete-button').click()
+                cy.get('button.gh-btn[data-ember-action=""]').last().click()
+            })
+            it('Delete Post', () => {
+                cy.get('button.post-settings').click()
+                cy.get('button.gh-btn.gh-btn-hover-red.gh-btn-icon.settings-menu-delete-button').click()
+                cy.get('button.gh-btn.gh-btn-red.gh-btn-icon.ember-view').first().click()
+                cy.url().should('eq', 'http://localhost:2368/ghost/#/posts?type=published')
             })
         })
     })
