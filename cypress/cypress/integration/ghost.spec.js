@@ -100,5 +100,12 @@ describe('Ghost', () => {
                 cy.url().should('eq', 'http://localhost:2368/ghost/#/posts?type=published')
             })
         })
+        context('Logout', () => {
+            it('Logout Ghost', () => {
+                cy.get('.gh-user-email').click()
+                cy.get('.dropdown-item.user-menu-signout.ember-view').click()
+                cy.url().should('eq', 'http://localhost:2368/__/#/signin')
+            })
+        })
     })
 })
