@@ -2,7 +2,6 @@
     "@user1": {
         "url" : "http://localhost:2368/ghost/",
         "user": "r.orellana@uniandes.edu.co",
-        "user2": "r.orellana@uniandes.edu.co",
         "userFail": "fail@uniandes.edu.co",
         "password": "admin12345"
     }
