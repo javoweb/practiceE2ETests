@@ -217,7 +217,7 @@ if ENV["ADB_DEVICE_ARG"].nil?
   end
   
   When(/^I click on button tag$/) do
-    sleep(1)
+    sleep(4)
     myPath = "//html/body/div[2]/div/nav[1]/section/div[1]/ul[2]/li[4]/a[contains(@href,'tags')]"
     e = @driver.find_element(:xpath, myPath)
     e.click
@@ -252,7 +252,7 @@ if ENV["ADB_DEVICE_ARG"].nil?
   end
 
   When(/^I click on button staff$/) do
-    sleep(1)
+    sleep(4)
     myPath = "//html/body/div[2]/div/nav[1]/section/div[1]/ul[2]/li[5]/a[contains(@href,'staff')]"
     e = @driver.find_element(:xpath, myPath)
     e.click
@@ -295,29 +295,11 @@ if ENV["ADB_DEVICE_ARG"].nil?
     e.click
   end
 
-
-
-  
-
-
-
-  
-
-  
-
-
-  
-
-
-  
-
-  
-
-
-  
-
-  
-  
-
+  When(/^I click on link to return pages$/) do
+    sleep(1)
+    myPath = "//html/body/div[2]/div/main/section/header/div/div[1]/a[contains(@href,'pages')]"
+    e = @driver.find_element(:xpath, myPath)
+    e.click
+  end
 
 end

@@ -1,7 +1,7 @@
 Feature: Actualizar Pagina
 
   @user1 @web
-  Scenario: Actualizar pagina utilizando menos de 100 caracteres
+  Scenario: Actualizar pagina utilizando menos de 255 caracteres
     Given I navigate to page "<url>"
     When I enter "<user>" into input field having id "ember8"
     And I enter "<password>" into input field having id "ember10"
