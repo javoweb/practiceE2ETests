@@ -1,5 +1,5 @@
 PATH
-  remote: ../KrakenMobile-1.0.9
+  remote: ../KrakenMobile-1.0.9.b
   specs:
     kraken-mobile (1.0.9)
       calabash-android (= 0.9.8)
