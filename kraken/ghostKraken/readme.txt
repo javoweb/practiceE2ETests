@@ -6,3 +6,6 @@ bundle exec kraken-mobile run --properties=config.json
 
 ** En caso de haber un fallo en la ejecución setear esta variable de entorno
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+** Nota: En este trabajo se modificó la versión base de krakenMobile 1.0.9 , para lograr que los archivos generados en los reportes uticen 
+un timestamp en sus nombres en vez de nombres aleatorios.
