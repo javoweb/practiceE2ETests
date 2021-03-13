@@ -1,0 +1,56 @@
+[
+    {
+        "caseName": "All Fields Empty",
+        "email": " ",
+        "password": " ",
+        "response": "Please fill out the form to sign in."
+    },
+    {
+        "caseName": "Email Field Empty",
+        "email": " ",
+        "password": "sdgfsgds",
+        "response": "Please fill out the form to sign in."
+    },
+    {
+        "caseName": "Password Field Empty",
+        "email": "sdafasddf",
+        "password": " ",
+        "response": "Please fill out the form to sign in."
+    },
+    {
+        "caseName": "Wrong email format",
+        "email": "sdafasddf",
+        "password": "sdgfsgds",
+        "response": "Please fill out the form to sign in."
+    },
+    {
+        "caseName": "Email with wrong format(only @)",
+        "email": "sdafasddf@",
+        "password": "sdgfsgds",
+        "response": "Please fill out the form to sign in."
+    },
+    {
+        "caseName": "Email with wrong format(without domain)",
+        "email": "sdafasddf@.com",
+        "password": "sdgfsgds",
+        "response": "Please fill out the form to sign in."
+    },
+    {
+        "caseName": "Email with wrong format(only .com)",
+        "email": "sdafasddf.com",
+        "password": "sdgfsgds",
+        "response": "Please fill out the form to sign in."
+    },
+    {
+        "caseName": "Email not exist",
+        "email": "sdafasddf@d.com",
+        "password": "sdgfsgds",
+        "response": "There is no user with that email address."
+    },
+    {
+        "caseName": "Incorrect password",
+        "email": "example@example.com",
+        "password": "sdgfsgds",
+        "response": "Your password is incorrect."
+    }
+]

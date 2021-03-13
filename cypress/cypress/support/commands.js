@@ -68,7 +68,7 @@ Cypress.Commands.add("fillLogin", (email, password) => {
 // Get Commands
 
 Cypress.Commands.add("getLoginError", () => {
-    cy.get('p.main-error')
+    cy.wait(1000).get('p.main-error')
 })
 
 Cypress.Commands.add("getAlert", () => {

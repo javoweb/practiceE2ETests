@@ -1,14 +1,17 @@
-const credentials = require('../fixtures/loginCredentials.json')
+const credentials = require('../fixtures/credentials.json')
+const loginCases = require('../fixtures/loginCases.json')
 
 describe('Ghost', () => {
     beforeEach(() => {
         cy.visitLoginPage()
     })
     context('Login tests', () => {
-        it('Wrong Credentials', () => {
-            cy.fillLogin('user@user.com', 'jdv;nsfnd').click()
-            cy.getLoginError().then(($p) => {
-                expect($p.get(0).innerText).to.include('There is no user with that email address')
+        loginCases.forEach(testCase => {
+            it(`Case ${testCase.caseName}`, () => {
+                cy.fillLogin(testCase.email, testCase.password).click()
+                cy.getLoginError().then(($p) => {
+                    expect($p.get(0).innerText).to.include(testCase.response)
+                })
             })
         })
 
