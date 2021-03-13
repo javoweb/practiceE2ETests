@@ -28,10 +28,11 @@
 // Go To Commands
 
 Cypress.Commands.add("goToNewPost", () => {
-    cy.get('a[title="New post"').click()
+    cy.get('a[title="New post"]').click()
 })
 Cypress.Commands.add("goToPostsPage", () => {
-    cy.get('a[href="#/posts/"]').first().click()
+    cy.visit('ghost/#/posts/')
+    cy.wait(1500)
 })
 
 Cypress.Commands.add("goToPublishedPage", () => {
@@ -47,14 +48,14 @@ Cypress.Commands.add("visitLoginPage", () => {
 // Typing Commands
 
 Cypress.Commands.add("typeTitle", (text) => {
-    cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type(text)
+    cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').should('not.be.disabled').clear().type(text)
 })
 
 Cypress.Commands.add("typeContents", (text, clear = true) => {
     if (clear) {
-        cy.get('.koenig-editor__editor.__mobiledoc-editor').clear().type(text)
+        cy.get('.koenig-editor__editor.__mobiledoc-editor').should('not.be.disabled').clear().type(text)
     } else {
-        cy.get('.koenig-editor__editor.__mobiledoc-editor').type(text)
+        cy.get('.koenig-editor__editor.__mobiledoc-editor').should('not.be.disabled').type(text)
     } 
 })
 
@@ -107,4 +108,10 @@ Cypress.Commands.add("clickOnAccept", () => {
 Cypress.Commands.add("clickOnLogout", () => {
     cy.get('.gh-user-email').click()
     cy.get('.dropdown-item.user-menu-signout.ember-view').click()
+})
+
+// Focus Commands
+
+Cypress.Commands.add("focusOnContents", (text, clear = true) => {
+    cy.get('.koenig-editor__editor.__mobiledoc-editor').focus()
 })

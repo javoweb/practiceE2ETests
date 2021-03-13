@@ -1,5 +1,24 @@
+var faker = require('faker')
+
 const credentials = require('../fixtures/credentials.json')
+const parameters = require('../fixtures/parameters.json')
 const loginCases = require('../fixtures/loginCases.json')
+
+var validTitleLens = [
+    parameters.postTitle.maxLength, 
+    parameters.postTitle.maxLength - 1, 
+    parameters.postTitle.maxLength - 2, 
+    parameters.postTitle.maxLength - 10, 
+    1, 
+    2, 
+    3,
+    10
+]
+var invalidTitleLens = [
+    parameters.postTitle.maxLength + 1, 
+    parameters.postTitle.maxLength + 2, 
+    parameters.postTitle.maxLength + 10
+]
 
 describe('Ghost', () => {
     beforeEach(() => {
@@ -27,53 +46,67 @@ describe('Ghost', () => {
             cy.wait(1000)
         })
         context('Create Post', () => {
-            it('Start Post', () => {
+            beforeEach(() => {
                 cy.goToNewPost()
-                cy.typeTitle('Test')
-                cy.typeContents('t', false)
+                cy.typeTitle(faker.lorem.word())
+                cy.focusOnContents()
             })
-            it('Continue Post', () => {
-                cy.goToPostsPage()
-                cy.clickOnFirstPost()
-                cy.typeContents('test')
-                cy.clickOnPublish()
-                cy.getNotification().then(($title) => {
-                    expect($title.get(0).innerText).to.include('Published')
+            validTitleLens.forEach(len => {
+                it(`Create valid post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.goToPostsPage()
+                    cy.clickOnFirstPost()
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.typeTitle(title)
+                    cy.clickOnPublish()
+                    cy.getNotification().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Published')
+                    })
                 })
             })
-            it('Start Invalid Post', () => {
-                cy.goToNewPost()
-                cy.typeTitle('Test')
-                cy.typeContents('t', false)
-            })
-            it('Continue Invalid Post', () => {
-                cy.goToPostsPage()
-                cy.clickOnFirstPost()
-                cy.typeContents('test')
-                cy.typeTitle('Testjckdksajsdkjasdjkdfskjbsdfkvbjsdnfvnjsdkjfvbhsbdd;aksdcn;jabsdckjl; klvcn lksndc ;lnxsdavjkasddvjkasdvkjnasjew;jvnw;jvnd;wkldsnvkdnsf;vlnfjdv;sdjfvn;sdjf vnsdjndvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvadsf vsdv sdv sdf vsdf gfs fdtgerynhglksdca')
-                cy.clickOnPublish()
-                cy.getAlert().then(($title) => {
-                    expect($title.get(0).innerText).to.include('Saving failed')
+            invalidTitleLens.forEach(len => {
+                it(`Create invalid post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.goToPostsPage()
+                    cy.clickOnFirstPost()
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.typeTitle(title)
+                    cy.clickOnPublish()
+                    cy.getAlert().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Saving failed')
+                    })
                 })
-            })
+            }) 
         })
         context('Edit Post', () => {
             beforeEach(() => {
                 cy.goToPublishedPage()
                 cy.clickOnFirstPost()
             })
-            it('Edit Valid Post', () => {
-                cy.typeContents('edited test')
-                cy.clickOnPublish()
-                cy.getNotification().then(($title) => {
-                    expect($title.get(0).innerText).to.include('Updated')
+            validTitleLens.forEach(len => {
+                it(`Edit Valid Post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.typeTitle(title)
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.clickOnPublish()
+                    cy.getNotification().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Updated')
+                    })
                 })
             })
-            it('Edit Invalid Post', () => {
-                cy.typeTitle('Testjckdksajsdkjasdjkdfskjbsdfkvbjsdnfvnjsdkjfvbhsbdd;aksdcn;jabsdckjl; klvcn lksndc ;lnxsdavjkasddvjkasdvkjnasjew;jvnw;jvnd;wkldsnvkdnsf;vlnfjdv;sdjfvn;sdjf vnsdjndvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvadsf vsdv sdv sdf vsdf gfs fdtgerynhglksdca')
-                cy.clickOnPublish()
-                cy.getAlert().then(($title) => {
-                    expect($title.get(0).innerText).to.include('Update failed')
+            invalidTitleLens.forEach(len => {
+                it(`Edit Invalid Post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.typeTitle(title)
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.clickOnPublish()
+                    cy.getAlert().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Update failed')
+                    })
                 })
             })
         })
