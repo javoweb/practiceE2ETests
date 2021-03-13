@@ -20,6 +20,10 @@ var invalidTitleLens = [
     parameters.postTitle.maxLength + 10
 ]
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+    return false;
+  });
+
 describe('Ghost', () => {
     beforeEach(() => {
         cy.visitLoginPage()
@@ -106,6 +110,57 @@ describe('Ghost', () => {
                     cy.clickOnPublish()
                     cy.getAlert().then(($title) => {
                         expect($title.get(0).innerText).to.include('Update failed')
+                    })
+                })
+            })
+        })
+        context('Save as Draft', () =>{
+            beforeEach(() => {
+                cy.goToNewPost()
+                cy.typeTitle(faker.lorem.word())
+                cy.focusOnContents()
+            })
+            validTitleLens.forEach(len => {
+                it(`Save as draft post with title of length ${len}`, () => {
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/postContents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+                    cy.request(options).then(response => {
+                         let title = response.body.title
+                         title = (title.length > len) ? title.substring(0, len) : title
+                         cy.goToPostsPage()
+                         cy.clickOnFirstPost()
+                         cy.typeContents(response.body.contents)
+                         cy.typeTitle(title)
+                         cy.clickOnReturnButton()
+                         cy.getFirstPostTitle().then(($title) => {
+                             expect($title.get(0).innerText).to.include(title)
+                         })
+                    })
+                })
+            })
+            invalidTitleLens.forEach(len => {
+                it(`Fail to save as draft post with title of length ${len}`, () => {
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/postContents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+                    cy.request(options).then(response => {
+                         let title = response.body.title
+                         title = (title.length > len) ? title.substring(0, len) : title
+                         cy.goToPostsPage()
+                         cy.clickOnFirstPost()
+                         cy.typeContents(response.body.contents)
+                         cy.typeTitle(title)
+                         cy.clickOnReturnButton()
+                         cy.url().should('not.eq', 'http://localhost:2368/ghost/#/posts')
                     })
                 })
             })

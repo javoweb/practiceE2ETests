@@ -32,7 +32,7 @@ Cypress.Commands.add("goToNewPost", () => {
 })
 Cypress.Commands.add("goToPostsPage", () => {
     cy.visit('ghost/#/posts/')
-    cy.wait(1500)
+    cy.wait(2000)
 })
 
 Cypress.Commands.add("goToPublishedPage", () => {
@@ -41,7 +41,7 @@ Cypress.Commands.add("goToPublishedPage", () => {
 
 Cypress.Commands.add("visitLoginPage", () => {
     cy.visit('ghost/#/signin')
-    cy.wait(1500)
+    cy.wait(2000)
 })
 
 
@@ -80,6 +80,10 @@ Cypress.Commands.add("getNotification", () => {
     cy.get('.gh-notification-title')
 })
 
+Cypress.Commands.add("getFirstPostTitle", () => {
+    cy.get('h3.gh-content-entry-title').filter(':visible').first()
+})
+
 
 // Click Commands
 
@@ -108,6 +112,10 @@ Cypress.Commands.add("clickOnAccept", () => {
 Cypress.Commands.add("clickOnLogout", () => {
     cy.get('.gh-user-email').click()
     cy.get('.dropdown-item.user-menu-signout.ember-view').click()
+})
+
+Cypress.Commands.add("clickOnReturnButton", () => {
+    cy.get('a.blue.link.fw4.flex.items-center.ember-view[href="#/posts/"]').should('be.visible').click()
 })
 
 // Focus Commands
