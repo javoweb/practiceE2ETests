@@ -44,6 +44,18 @@ Cypress.Commands.add("visitLoginPage", () => {
     cy.wait(2000)
 })
 
+Cypress.Commands.add("goToPagesPage", () => {
+    cy.visit('ghost/#/pages/')
+    cy.wait(2000)
+})
+
+Cypress.Commands.add("goToNewPage", () => {
+    cy.wait(2000)
+    cy.xpath('//html/body/div[2]/div/main/section/header/section/a').click()
+    //cy.visit('ghost/#/editor/page')
+   
+})
+
 
 // Typing Commands
 
@@ -116,6 +128,17 @@ Cypress.Commands.add("clickOnLogout", () => {
 
 Cypress.Commands.add("clickOnReturnButton", () => {
     cy.get('a.blue.link.fw4.flex.items-center.ember-view[href="#/posts/"]').should('be.visible').click()
+})
+
+Cypress.Commands.add("clickOnFirstPage", () => {
+    cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+})
+
+Cypress.Commands.add("clickOnPublishAndSchedule", () => {
+    cy.wait(10000)
+    cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
+    cy.xpath('//html/body/div[1]/div/div/section/div/div[2]/div[1]').click()
+    cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
 })
 
 // Focus Commands

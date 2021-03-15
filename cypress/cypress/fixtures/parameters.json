@@ -1,5 +1,8 @@
 {
     "postTitle": {
         "maxLength": 255
+    },
+    "pageTitle": {
+        "maxLength": 255
     }
 }
