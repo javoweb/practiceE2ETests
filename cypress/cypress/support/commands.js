@@ -50,10 +50,19 @@ Cypress.Commands.add("goToPagesPage", () => {
 })
 
 Cypress.Commands.add("goToNewPage", () => {
-    cy.wait(2000)
     cy.xpath('//html/body/div[2]/div/main/section/header/section/a').click()
     //cy.visit('ghost/#/editor/page')
-   
+    cy.wait(2000)
+})
+
+Cypress.Commands.add("goToTagsPage", () => {
+    cy.visit('ghost/#/tags/')
+    cy.wait(2000)
+})
+
+Cypress.Commands.add("goToNewTag", () => {
+    cy.xpath('//html/body/div[2]/div/main/section/header/section/a').click()
+    cy.wait(2000)
 })
 
 
@@ -77,6 +86,12 @@ Cypress.Commands.add("fillLogin", (email, password) => {
     cy.get('#ember12 > span')
 })
 
+Cypress.Commands.add("typeNameTag", (name) => {
+    //myInput = cy.xpath('//*[@id="tag-name"]')
+    //myInput.type(name)
+    cy.get('#tag-name').type(name,{ force: true })
+
+})
 
 // Get Commands
 
@@ -94,6 +109,10 @@ Cypress.Commands.add("getNotification", () => {
 
 Cypress.Commands.add("getFirstPostTitle", () => {
     cy.get('h3.gh-content-entry-title').filter(':visible').first()
+})
+
+Cypress.Commands.add("getAlertButtonSaveTag", () => {
+    cy.xpath('//html/body/div[2]/div/main/section/form/header/section/button/span')
 })
 
 
@@ -139,6 +158,18 @@ Cypress.Commands.add("clickOnPublishAndSchedule", () => {
     cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
     cy.xpath('//html/body/div[1]/div/div/section/div/div[2]/div[1]').click()
     cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
+})
+
+Cypress.Commands.add("clickOnPublishPage1", () => {
+    cy.xpath('//html/body/div[2]/div/main/section/header/section/div/div[1]/span').click()
+})
+
+Cypress.Commands.add("clickOnPublishPage2", () => {
+    cy.xpath('//html/body/div[1]/div/footer/button[2]/span').click()
+})
+
+Cypress.Commands.add("clickOnSaveTag", () => {
+    cy.xpath('//html/body/div[2]/div/main/section/form/header/section/button/span').click()
 })
 
 // Focus Commands

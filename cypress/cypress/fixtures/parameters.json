@@ -4,5 +4,8 @@
     },
     "pageTitle": {
         "maxLength": 255
+    },
+    "tagName": {
+        "maxLength": 191
     }
 }
