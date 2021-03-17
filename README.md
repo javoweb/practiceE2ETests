@@ -26,3 +26,29 @@ Pruebas E2E utilizando Kraken y Cypress. Entrega en equipo Semana 5. MISO Prueba
 | 7 | Editar Post   | Edita Post con título con más de 255 caracteres |
 | 8 | Eliminar Post | Elimina Post                                    |
 | 9 | Eliminar Post | Cancela la eliminación del Post                 |
+
+## Código semana 7
+
+### Instalación
+
+Instalar dependencias
+
+`npm install`
+
+Instalar cypress
+
+`npm install -g cypress`
+
+### Preparar credenciales
+
+Las credenciales del admin de ghost deben llenarse en el archivo `cypress/fixtures/credentials.json` y en la línea 52 del archivo `cypress/fixtures/loginCases.json`
+
+### Correr pruebas
+
+`cd cypress`
+
+`cypress run ghost`
+
+`cypress run ghostTestPage`
+
+`cypress run ghostTestTag`
