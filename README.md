@@ -15,17 +15,31 @@ Pruebas E2E utilizando Kraken y Cypress. Entrega en equipo Semana 5. MISO Prueba
 - Eliminar Post
 
 ## Escenarios de Prueba
-| # | Funcionalidad | Escenario                                       |
-| - | ------------- | ----------------------------------------------- |
-| 1 | Login         | Ingresa datos inválidos                         |
-| 2 | Login         | Ingresa datos válidos                           |
-| 3 | Logout        | Cierra Sesión                                   |
-| 4 | Crear Post    | Crea Post con datos válidos                     |
-| 5 | Crear Post    | Crea Post con título con más de 255 caracteres  |
-| 6 | Editar Post   | Edita Post con datos válidos                    |     
-| 7 | Editar Post   | Edita Post con título con más de 255 caracteres |
-| 8 | Eliminar Post | Elimina Post                                    |
-| 9 | Eliminar Post | Cancela la eliminación del Post                 |
+| # | Funcionalidad | Escenario                                       | Estrategia |
+| - | ------------- | ----------------------------------------------- | ---------- |
+| 1 | Login         | Ingresa datos inválidos                         | a priori   |
+| 2 | Login         | Ingresa datos válidos                           | a priori   |
+| 3 | Logout        | Cierra Sesión                                   | a priori   |
+| 4 | Crear Post    | Crea Post con datos válidos                     | aleatorio  |
+| 5 | Crear Post    | Crea Post con título con más de 255 caracteres  | aleatorio  |
+| 6 | Editar Post   | Edita Post con datos válidos                    | aleatorio  |   
+| 7 | Editar Post   | Edita Post con título con más de 255 caracteres | aleatorio  |
+| 8 | Eliminar Post | Elimina Post                                    | a priori   |
+| 9 | Eliminar Post | Cancela la eliminación del Post                 | a priori   |
+| 10| Guardar Post como borrador | Guarda Post con datos válidos      | aleatorio dinámico |
+| 11| Guardar Post como borrador | Guarda Post con título con más de 255 caracteres      | aleatorio dinámico |
+| 12 | Crear Página    | Crea Página con datos válidos                     | aleatorio  |
+| 13 | Crear Página   | Crea Página con título con más de 255 caracteres  | aleatorio  |
+| 14 | Editar Página  | Edita Página con datos válidos                    | aleatorio  |   
+| 15 | Editar Página   | Edita Página con título con más de 255 caracteres | aleatorio  |
+| 16 | Crear Tag    | Crea Tag con datos válidos                     | aleatorio  |
+| 17 | Crear Tag   | Crea Tag con título con más de 191 caracteres  | aleatorio  |
+| 18 | Editar Tag  | Edita Tag con datos válidos                    | aleatorio  |   
+| 19 | Editar Tag   | Edita Tag con título con más de 191 caracteres | aleatorio  |
+| 16 | Crear Tag    | Crea Tag con datos válidos                     | aleatorio  dinámico |
+| 17 | Crear Tag   | Crea Tag con título con más de 191 caracteres  | aleatorio  dinámico |
+| 18 | Editar Tag  | Edita Tag con datos válidos                    | aleatorio  dinámico |   
+| 19 | Editar Tag   | Edita Tag con título con más de 191 caracteres | aleatorio  dinámico |
 
 ## Código semana 7
 
