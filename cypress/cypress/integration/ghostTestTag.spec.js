@@ -11,12 +11,19 @@ var validNameLens = [
     parameters.tagName.maxLength - 10, 
     1, 
     2, 
-    3
+    3,
+    10,
+    20,
+    20,
+    40
 ]
 var invalidNameLens = [
     parameters.tagName.maxLength + 1, 
     parameters.tagName.maxLength + 2, 
-    parameters.tagName.maxLength + 10
+    parameters.tagName.maxLength + 10,
+    parameters.tagName.maxLength + 20,
+    parameters.tagName.maxLength + 30,
+    parameters.tagName.maxLength + 40
 ]
 
 Cypress.on('uncaught:exception', (err, runnable) => {

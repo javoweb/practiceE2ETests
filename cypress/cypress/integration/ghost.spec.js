@@ -12,12 +12,19 @@ var validTitleLens = [
     1, 
     2, 
     3,
-    10
+    10,
+    20,
+    30,
+    40
+    
 ]
 var invalidTitleLens = [
     parameters.postTitle.maxLength + 1, 
     parameters.postTitle.maxLength + 2, 
-    parameters.postTitle.maxLength + 10
+    parameters.postTitle.maxLength + 10,
+    parameters.postTitle.maxLength + 20,
+    parameters.postTitle.maxLength + 30,
+    parameters.postTitle.maxLength + 40
 ]
 
 Cypress.on('uncaught:exception', (err, runnable) => {
