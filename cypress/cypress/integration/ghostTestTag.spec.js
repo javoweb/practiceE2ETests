@@ -35,7 +35,7 @@ describe('Ghost', () => {
         })
         
         
-        context('Create Tag', () => {
+        context('Create Tag With Faker', () => {
            
             
             validNameLens.forEach(len => {
@@ -70,45 +70,170 @@ describe('Ghost', () => {
             
              
         })
+        
 
 
-        /*
-        context('Edit Page', () => {
-            beforeEach(() => {
-                cy.goToPagesPage()
-                cy.clickOnFirstPage()
-            })
+        
+        context('Edit Tags With Faker', () => {
             
             
             validNameLens.forEach(len => {
-                it(`Edit Valid Page with title of length ${len}`, () => {
-                    let title = faker.lorem.words(len)
-                    title = (title.length > len) ? title.substring(0, len) : title
-                    cy.typeTitle(title)
-                    cy.typeContents(faker.lorem.sentence())
-                    cy.clickOnPublish()
-                    cy.getNotification().then(($title) => {
-                        expect($title.get(0).innerText).to.include('Published')
+                it(`Edit Valid Tag with title of length ${len}`, () => {
+                    let name = faker.lorem.words(len)
+                    name = (name.length > len) ? name.substring(0, len) : name
+                    cy.goToPagesPage()//dmmy
+                    cy.goToTagsPage()
+                    cy.clickOnFirstTag()
+                    cy.clarAndtypeNameTag(name)
+                    cy.clickOnSaveTag() 
+                    cy.getAlertButtonSaveTag().then(($name) => {
+                        expect($name.get(0).innerText).to.include('Save')
+                    })
+                })
+            })
+            
+            
+            
+            invalidNameLens.forEach(len => {
+                it(`Edit Invalid Tag with title of length ${len}`, () => {
+                    let name = faker.lorem.words(len)
+                    name = (name.length > len) ? name.substring(0, len) : name
+                    cy.goToPagesPage()//dmmy
+                    cy.goToTagsPage()
+                    cy.clickOnFirstTag()
+                    cy.clarAndtypeNameTag(name)
+                    cy.clickOnSaveTag() 
+                    cy.getAlertButtonSaveTag().then(($name) => {
+                        expect($name.get(0).innerText).to.include('Retry')
+                    })
+                })
+            })
+            
+        })
+        
+
+        
+        context('Create Tag With Mockaroo', () => {
+           
+            
+            validNameLens.forEach(len => {
+                it(`Create valid tag with title of length ${len}`, () => {
+
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/tagcontents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+
+
+                    cy.request(options).then(response => {
+                        let name = response.body.title
+                        name = (name.length > len) ? name.substring(0, len) : name
+                        cy.goToPagesPage()//dmmy
+                        cy.goToTagsPage()
+                        cy.goToNewTag()
+                        cy.typeNameTag(name)
+                        cy.clickOnSaveTag() 
+                        cy.getAlertButtonSaveTag().then(($title) => {
+                            expect($title.get(0).innerText).to.include('Save')
+                        })
+                    })
+                })
+            })
+            
+
+            
+            invalidNameLens.forEach(len => {
+                it(`Create invalid tag with title of length ${len}`, () => {
+
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/tagcontents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+
+                    cy.request(options).then(response => {
+                        let name = response.body.title
+                        name = (name.length > len) ? name.substring(0, len) : name
+                        cy.goToPagesPage()//dmmy
+                        cy.goToTagsPage()
+                        cy.goToNewTag()
+                        cy.typeNameTag(name)
+                        cy.clickOnSaveTag() 
+                        cy.getAlertButtonSaveTag().then(($title) => {
+                            expect($title.get(0).innerText).to.include('Retry')
+                        })
+                    })
+
+                })
+            }) 
+             
+        })
+        
+
+
+       context('Edit Tags With Mockaroo', () => {
+            
+            
+            validNameLens.forEach(len => {
+                it(`Edit Valid Tag with title of length ${len}`, () => {
+
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/tagcontents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+
+                    cy.request(options).then(response => {
+                        let name = response.body.title
+                        name = (name.length > len) ? name.substring(0, len) : name
+                        cy.goToPagesPage()//dmmy
+                        cy.goToTagsPage()
+                        cy.clickOnFirstTag()
+                        cy.clarAndtypeNameTag(name)
+                        cy.clickOnSaveTag() 
+                        cy.getAlertButtonSaveTag().then(($name) => {
+                            expect($name.get(0).innerText).to.include('Save')
+                        })
                     })
                 })
             })
             
             invalidNameLens.forEach(len => {
-                it(`Edit Invalid Page with title of length ${len}`, () => {
-                    let title = faker.lorem.words(len)
-                    title = (title.length > len) ? title.substring(0, len) : title
-                    cy.typeTitle(title)
-                    cy.typeContents(faker.lorem.sentence())
-                    cy.clickOnPublish()
-                    cy.getAlert().then(($title) => {
-                        expect($title.get(0).innerText).to.include('Saving failed')
+                it(`Edit Invalid Tag with title of length ${len}`, () => {
+
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/tagcontents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+
+                    cy.request(options).then(response => {
+                        let name = response.body.title
+                        name = (name.length > len) ? name.substring(0, len) : name
+                        cy.goToPagesPage()//dmmy
+                        cy.goToTagsPage()
+                        cy.clickOnFirstTag()
+                        cy.clarAndtypeNameTag(name)
+                        cy.clickOnSaveTag() 
+                        cy.getAlertButtonSaveTag().then(($name) => {
+                            expect($name.get(0).innerText).to.include('Retry')
+                        })
                     })
                 })
             })
             
             
         })
-        */
+        
         
     })
     

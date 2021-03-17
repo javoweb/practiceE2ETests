@@ -93,6 +93,11 @@ Cypress.Commands.add("typeNameTag", (name) => {
 
 })
 
+Cypress.Commands.add("clarAndtypeNameTag", (name) => {
+    cy.get('#tag-name').clear({ force: true })
+    cy.get('#tag-name').type(name,{ force: true })
+})
+
 // Get Commands
 
 Cypress.Commands.add("getLoginError", () => {
@@ -170,6 +175,13 @@ Cypress.Commands.add("clickOnPublishPage2", () => {
 
 Cypress.Commands.add("clickOnSaveTag", () => {
     cy.xpath('//html/body/div[2]/div/main/section/form/header/section/button/span').click()
+})
+
+
+
+Cypress.Commands.add("clickOnFirstTag", () => {
+    //cy.xpath('//html/body/div[2]/div/main/section/section/ol/li[2]/a[1]/h3').click()
+    cy.xpath('//html/body/div[2]/div/main/section/section/ol/li[2]/a[4]/div/span').click()
 })
 
 // Focus Commands
