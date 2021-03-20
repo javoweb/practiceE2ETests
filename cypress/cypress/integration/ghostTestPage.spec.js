@@ -2,7 +2,6 @@ var faker = require('faker')
 
 const credentials = require('../fixtures/credentials.json')
 const parameters = require('../fixtures/parameters.json')
-const loginCases = require('../fixtures/loginCases.json')
 
 var validTitleLens = [
     parameters.pageTitle.maxLength, 

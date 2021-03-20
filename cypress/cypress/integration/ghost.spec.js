@@ -48,7 +48,9 @@ describe('Ghost', () => {
         it('Login Successful', () => {
             cy.fillLogin(credentials.email, credentials.password).click()
             cy.wait(1000)
-            cy.url().should('eq', 'http://localhost:2368/ghost/#/site')
+            cy.url().should(($url) => {
+                expect($url).to.contain('/ghost/#/site')
+            })
         })
     })
     context('Admin Page Tests', () => {
@@ -60,12 +62,14 @@ describe('Ghost', () => {
             beforeEach(() => {
                 cy.goToNewPost()
                 cy.typeTitle(faker.lorem.word())
+                cy.wait(500)
                 cy.focusOnContents()
             })
             validTitleLens.forEach(len => {
                 it(`Create valid post with title of length ${len}`, () => {
                     let title = faker.lorem.words(len)
                     title = (title.length > len) ? title.substring(0, len) : title
+                    cy.wait(1000)
                     cy.goToPostsPage()
                     cy.clickOnFirstPost()
                     cy.typeContents(faker.lorem.sentence())
@@ -80,6 +84,7 @@ describe('Ghost', () => {
                 it(`Create invalid post with title of length ${len}`, () => {
                     let title = faker.lorem.words(len)
                     title = (title.length > len) ? title.substring(0, len) : title
+                    cy.wait(1000)
                     cy.goToPostsPage()
                     cy.clickOnFirstPost()
                     cy.typeContents(faker.lorem.sentence())
@@ -167,7 +172,9 @@ describe('Ghost', () => {
                          cy.typeContents(response.body.contents)
                          cy.typeTitle(title)
                          cy.clickOnReturnButton()
-                         cy.url().should('not.eq', 'http://localhost:2368/ghost/#/posts')
+                         cy.url().should(($url) => {
+                            expect($url).not.to.contain('/ghost/#/posts')
+                        })
                     })
                 })
             })
@@ -184,13 +191,17 @@ describe('Ghost', () => {
             it('Delete Post', () => {
                 cy.clickOnDelete()
                 cy.clickOnAccept()
-                cy.url().should('eq', 'http://localhost:2368/ghost/#/posts?type=published')
+                cy.url().should(($url) => {
+                    expect($url).to.contain('/ghost/#/posts?type=published')
+                })
             })
         })
         context('Logout', () => {
             it('Logout Ghost', () => {
                 cy.clickOnLogout()
-                cy.url().should('eq', 'http://localhost:2368/__/#/signin')
+                cy.url().should(($url) => {
+                    expect($url).to.contain('/#/signin')
+                })
             })
         })
     })
