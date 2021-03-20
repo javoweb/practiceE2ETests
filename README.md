@@ -1,6 +1,6 @@
 # practiceE2ETests
 
-* Para ejecutar la rutina completa de prueba regresión y generación de reportes VRT, debe siturse en la carpeta raíz de este proyecto "practiceE2ETest" y ejecutar el sript: sh run_kraken.sh
+* Para ejecutar la rutina completa de prueba regresión y generación de reportes VRT, debe siturse en la carpeta raíz de este proyecto "practiceE2ETest" y ejecutar el script: sh run_kraken.sh
 Ejemplo:
 /practiceE2ETests$ sh run_kraken.sh
 Nota: Si presenta problemas en la ejecución del script debe revisar los respectivos readme de Kraken y VRT (ver a continuación)
