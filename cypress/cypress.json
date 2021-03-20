@@ -1,0 +1,5 @@
+{
+    "projectId":"Registration-example",
+    "baseUrl": "http://localhost:2368/",
+    "chromeWebSecurity": false
+}
