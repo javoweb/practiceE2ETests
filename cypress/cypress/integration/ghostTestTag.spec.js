@@ -39,6 +39,8 @@ describe('Ghost', () => {
         beforeEach(() => {
             cy.fillLogin(credentials.email, credentials.password).click()
             cy.wait(1000)
+            cy.goToPagesPage()//dmmy
+            cy.goToTagsPage()
         })
         
         
@@ -49,8 +51,6 @@ describe('Ghost', () => {
                 it(`Create valid tag with title of length ${len}`, () => {
                     let name = faker.lorem.words(len)
                     name = (name.length > len) ? name.substring(0, len) : name
-                    cy.goToPagesPage()//dmmy
-                    cy.goToTagsPage()
                     cy.goToNewTag()
                     cy.typeNameTag(name)
                     cy.clickOnSaveTag() 
@@ -64,8 +64,6 @@ describe('Ghost', () => {
                 it(`Create invalid tag with title of length ${len}`, () => {
                     let name = faker.lorem.words(len)
                     name = (name.length > len) ? name.substring(0, len) : name
-                    cy.goToPagesPage()//dmmy
-                    cy.goToTagsPage()
                     cy.goToNewTag()
                     cy.typeNameTag(name)
                     cy.clickOnSaveTag() 
@@ -88,8 +86,6 @@ describe('Ghost', () => {
                 it(`Edit Valid Tag with title of length ${len}`, () => {
                     let name = faker.lorem.words(len)
                     name = (name.length > len) ? name.substring(0, len) : name
-                    cy.goToPagesPage()//dmmy
-                    cy.goToTagsPage()
                     cy.clickOnFirstTag()
                     cy.clarAndtypeNameTag(name)
                     cy.clickOnSaveTag() 
@@ -105,8 +101,6 @@ describe('Ghost', () => {
                 it(`Edit Invalid Tag with title of length ${len}`, () => {
                     let name = faker.lorem.words(len)
                     name = (name.length > len) ? name.substring(0, len) : name
-                    cy.goToPagesPage()//dmmy
-                    cy.goToTagsPage()
                     cy.clickOnFirstTag()
                     cy.clarAndtypeNameTag(name)
                     cy.clickOnSaveTag() 
