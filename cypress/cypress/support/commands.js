@@ -167,7 +167,14 @@ Cypress.Commands.add("clickOnFirstPage", () => {
 })
 
 Cypress.Commands.add("clickOnFirstPublishedPage", () => {
-    cy.get('gh-content-status-published nowrap').filter(':visible').first().click({force: true})
+    cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().focus()
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.get('.gh-content-status-published.nowrap').first().click({force: true})
 })
 
 Cypress.Commands.add("clickOnPublishAndSchedule", () => {

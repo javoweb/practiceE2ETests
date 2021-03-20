@@ -109,7 +109,7 @@ describe('Ghost', () => {
                     cy.typeContents(faker.lorem.sentence())
                     cy.clickOnPublish()
                     cy.getAlert().then(($title) => {
-                        expect($title.get(0).innerText).to.include('Saving failed')
+                        expect($title.get(0).innerText).to.include('Update failed')
                     })
                 })
             })
