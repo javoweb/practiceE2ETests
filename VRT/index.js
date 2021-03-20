@@ -136,7 +136,7 @@ function generateScreenshotTable(result) {
 }
 
 const datetime = new Date().toISOString().replace(/:/g,".");
-const baseTestsPath = '../kraken/ghostKraken/reports/';
+const baseTestsPath = '../kraken/ghostKraken/';
 const baseResultsPath = './diffs/';
 const v1Folder = 'reportsGhostV1-iteracion3/';
 const v3Folder = 'reportsGhostV3-iteracion3/';

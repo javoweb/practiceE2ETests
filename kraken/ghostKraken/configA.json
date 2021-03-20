@@ -1,0 +1,8 @@
+{
+    "@user1": {
+        "url" : "http://54.88.99.50/ghost/",
+        "user": "example@example.com",
+        "userFail": "fail@example.com",
+        "password": "Mypasscypress"
+    }
+}
