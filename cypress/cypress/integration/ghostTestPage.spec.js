@@ -33,14 +33,19 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 describe('Ghost', () => {
     beforeEach(() => {
         cy.visitLoginPage()
+        cy.fillLogin(credentials.email, credentials.password).click()
+        cy.wait(1000)
+        cy.goToPagesPage()
     })
 
     context('Admin Real Page Tests', () => {
-        beforeEach(() => {
-            cy.fillLogin(credentials.email, credentials.password).click()
-            cy.wait(1000)
-        })
         context('Create Page', () => {
+            beforeEach(() => {
+                cy.clickOnNewPage()
+                cy.typeTitle(faker.lorem.word())
+                cy.wait(500)
+                cy.focusOnContents()
+            })
            
             validTitleLens.forEach(len => {
                 it(`Create valid page with title of length ${len}`, () => {
@@ -52,7 +57,7 @@ describe('Ghost', () => {
                     cy.typeTitle(title)
                     cy.clickOnPublish()
                     cy.getNotification().then(($title) => {
-                        expect($title.get(0).innerText).to.include('Updated')
+                        expect($title.get(0).innerText).to.include('Published')
                     })
                 })
             })
@@ -79,8 +84,7 @@ describe('Ghost', () => {
 
         context('Edit Page', () => {
             beforeEach(() => {
-                cy.goToPagesPage()
-                cy.clickOnFirstPage()
+                cy.clickOnFirstPublishedPage()
             })
             
             

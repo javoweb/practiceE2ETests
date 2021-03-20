@@ -69,7 +69,6 @@ describe('Ghost', () => {
                 it(`Create valid post with title of length ${len}`, () => {
                     let title = faker.lorem.words(len)
                     title = (title.length > len) ? title.substring(0, len) : title
-                    cy.wait(1000)
                     cy.goToPostsPage()
                     cy.clickOnFirstPost()
                     cy.typeContents(faker.lorem.sentence())
@@ -84,7 +83,6 @@ describe('Ghost', () => {
                 it(`Create invalid post with title of length ${len}`, () => {
                     let title = faker.lorem.words(len)
                     title = (title.length > len) ? title.substring(0, len) : title
-                    cy.wait(1000)
                     cy.goToPostsPage()
                     cy.clickOnFirstPost()
                     cy.typeContents(faker.lorem.sentence())

@@ -31,6 +31,7 @@ Cypress.Commands.add("goToNewPost", () => {
     cy.get('a[title="New post"]').click()
 })
 Cypress.Commands.add("goToPostsPage", () => {
+    cy.wait(1000)
     cy.visit('ghost/#/posts/')
     cy.wait(2000)
 })
@@ -40,11 +41,13 @@ Cypress.Commands.add("goToPublishedPage", () => {
 })
 
 Cypress.Commands.add("visitLoginPage", () => {
+    cy.wait(1000)
     cy.visit('ghost/#/signin')
     cy.wait(2000)
 })
 
 Cypress.Commands.add("goToPagesPage", () => {
+    cy.wait(1000)
     cy.visit('ghost/#/pages/')
     cy.wait(2000)
 })
@@ -56,6 +59,7 @@ Cypress.Commands.add("goToNewPage", () => {
 })
 
 Cypress.Commands.add("goToTagsPage", () => {
+    cy.wait(1000)
     cy.visit('ghost/#/tags/')
     cy.wait(2000)
 })
@@ -145,6 +149,10 @@ Cypress.Commands.add("clickOnAccept", () => {
     cy.get('button.gh-btn.gh-btn-red.gh-btn-icon.ember-view').first().click()
 })
 
+Cypress.Commands.add("clickOnNewPage", () => {
+    cy.get('a.ember-view.gh-btn.gh-btn-green').first().click()
+})
+
 Cypress.Commands.add("clickOnLogout", () => {
     cy.get('.gh-user-email').click()
     cy.get('.dropdown-item.user-menu-signout.ember-view').click()
@@ -156,6 +164,10 @@ Cypress.Commands.add("clickOnReturnButton", () => {
 
 Cypress.Commands.add("clickOnFirstPage", () => {
     cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+})
+
+Cypress.Commands.add("clickOnFirstPublishedPage", () => {
+    cy.get('gh-content-status-published nowrap').filter(':visible').first().click({force: true})
 })
 
 Cypress.Commands.add("clickOnPublishAndSchedule", () => {
