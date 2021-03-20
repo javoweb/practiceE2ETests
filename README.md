@@ -8,5 +8,5 @@ Nota: Si presenta problemas en la ejecución del script debe revisar los respect
 
 * Para ejecutar Kraken (por si sólo) se debe revisar el readme que está en la sgte ruta: /kraken/ghostKraken/readme.txt
 
-* Para ejecutar la generación de reportes (ṕor si sólo) se debe revisar el readme que está en la sgte ruta: /VRT/README.md
+* Para ejecutar la generación de reportes (por si sólo) se debe revisar el readme que está en la sgte ruta: /VRT/README.md
 
