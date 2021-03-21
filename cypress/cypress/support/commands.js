@@ -121,7 +121,23 @@ Cypress.Commands.add("getFirstPostTitle", () => {
 })
 
 Cypress.Commands.add("getAlertButtonSaveTag", () => {
-    cy.xpath('//html/body/div[2]/div/main/section/form/header/section/button/span')
+    cy.get('button.gh-btn.gh-btn-blue.gh-btn-icon.gh-btn-green.ember-view > span')
+})
+
+Cypress.Commands.add("getFirstTag", () => {
+    cy.get('a[title="Edit tag"').first().focus()
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
+    cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.get('h3.gh-tag-list-name')
 })
 
 
@@ -169,10 +185,15 @@ Cypress.Commands.add("clickOnFirstPage", () => {
 Cypress.Commands.add("clickOnFirstPublishedPage", () => {
     cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().focus()
     cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
     cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
     cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
     cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
     cy.scrollTo('bottom', {ensureScrollable: false})
+    cy.wait(200)
     cy.scrollTo('bottom', {ensureScrollable: false})
     cy.get('.gh-content-status-published.nowrap').first().click({force: true})
 })

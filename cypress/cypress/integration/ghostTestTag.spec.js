@@ -54,9 +54,9 @@ describe('Ghost', () => {
                     cy.goToNewTag()
                     cy.typeNameTag(name)
                     cy.clickOnSaveTag() 
-                    cy.getAlertButtonSaveTag().then(($title) => {
-                        expect($title.get(0).innerText).to.include('Save')
-                    })
+                    cy.wait(1000)
+                    cy.goToTagsPage()
+                    cy.getFirstTag().contains(name)
                 })
             })
             
@@ -115,7 +115,6 @@ describe('Ghost', () => {
 
         
         context('Create Tag With Mockaroo', () => {
-           
             
             validNameLens.forEach(len => {
                 it(`Create valid tag with title of length ${len}`, () => {
@@ -132,14 +131,12 @@ describe('Ghost', () => {
                     cy.request(options).then(response => {
                         let name = response.body.title
                         name = (name.length > len) ? name.substring(0, len) : name
-                        cy.goToPagesPage()//dmmy
-                        cy.goToTagsPage()
                         cy.goToNewTag()
                         cy.typeNameTag(name)
                         cy.clickOnSaveTag() 
-                        cy.getAlertButtonSaveTag().then(($title) => {
-                            expect($title.get(0).innerText).to.include('Save')
-                        })
+                        cy.wait(1000)
+                        cy.goToTagsPage()
+                        cy.getFirstTag().contains(name)
                     })
                 })
             })
@@ -160,8 +157,6 @@ describe('Ghost', () => {
                     cy.request(options).then(response => {
                         let name = response.body.title
                         name = (name.length > len) ? name.substring(0, len) : name
-                        cy.goToPagesPage()//dmmy
-                        cy.goToTagsPage()
                         cy.goToNewTag()
                         cy.typeNameTag(name)
                         cy.clickOnSaveTag() 
@@ -194,8 +189,6 @@ describe('Ghost', () => {
                     cy.request(options).then(response => {
                         let name = response.body.title
                         name = (name.length > len) ? name.substring(0, len) : name
-                        cy.goToPagesPage()//dmmy
-                        cy.goToTagsPage()
                         cy.clickOnFirstTag()
                         cy.clarAndtypeNameTag(name)
                         cy.clickOnSaveTag() 
@@ -220,8 +213,6 @@ describe('Ghost', () => {
                     cy.request(options).then(response => {
                         let name = response.body.title
                         name = (name.length > len) ? name.substring(0, len) : name
-                        cy.goToPagesPage()//dmmy
-                        cy.goToTagsPage()
                         cy.clickOnFirstTag()
                         cy.clarAndtypeNameTag(name)
                         cy.clickOnSaveTag() 
