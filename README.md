@@ -45,9 +45,14 @@ Instalar dependencias
 
 `npm install`
 
+
 Instalar cypress
 
 `npm install -g cypress`
+
+Instalar dependencias del proyecto
+`npm ci`
+`npm install -D cypress-xpath`
 
 ### Preparar credenciales
 
