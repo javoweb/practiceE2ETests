@@ -84,6 +84,8 @@ Nota: Si presenta problemas en la ejecución del script debe revisar los respect
 ## Pruebas aleatorioas con Monkey Cypress
 
 Ir a la carpeta del subproyecto: `cd monkey_cypress`
+
 Correr con el comando: `npm run cypress:open`
+
 Luego en el browser dar click en `monkey.spec.js`
 
