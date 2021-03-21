@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 gem 'rubyzip', '1.2.1' # Required version for running calabash-android in Windows
-gem 'kraken-mobile', path: '../KrakenMobile-1.0.9'
+gem 'kraken-mobile', path: '../KrakenMobile-1.0.9.b'
 gem 'calabash-android'
 gem 'cucumber'
 
