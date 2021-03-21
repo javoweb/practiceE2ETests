@@ -1,0 +1,11 @@
+{
+    "postTitle": {
+        "maxLength": 255
+    },
+    "pageTitle": {
+        "maxLength": 255
+    },
+    "tagName": {
+        "maxLength": 191
+    }
+}

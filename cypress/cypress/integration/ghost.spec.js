@@ -1,110 +1,205 @@
+var faker = require('faker')
+
+const credentials = require('../fixtures/credentials.json')
+const parameters = require('../fixtures/parameters.json')
+const loginCases = require('../fixtures/loginCases.json')
+
+var validTitleLens = [
+    parameters.postTitle.maxLength, 
+    parameters.postTitle.maxLength - 1, 
+    parameters.postTitle.maxLength - 2, 
+    parameters.postTitle.maxLength - 10, 
+    1, 
+    2, 
+    3,
+    10,
+    20,
+    30,
+    40
+    
+]
+var invalidTitleLens = [
+    parameters.postTitle.maxLength + 1, 
+    parameters.postTitle.maxLength + 2, 
+    parameters.postTitle.maxLength + 10,
+    parameters.postTitle.maxLength + 20,
+    parameters.postTitle.maxLength + 30,
+    parameters.postTitle.maxLength + 40
+]
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    return false;
+  });
+
 describe('Ghost', () => {
     beforeEach(() => {
-        cy.visit('ghost/#/signin')
-        cy.wait(1500)
+        cy.visitLoginPage()
     })
     context('Login tests', () => {
-        it('Wrong Credentials', () => {
-            cy.get('#ember8').type('exam@exam.com')
-            cy.get('#ember10').type('password')
-            cy.get('#ember12 > span').click()
-            cy.get('p.main-error').then(($p) => {
-                expect($p.get(0).innerText).to.include('There is no user with that email address')
+        loginCases.forEach(testCase => {
+            it(`Case ${testCase.caseName}`, () => {
+                cy.fillLogin(testCase.email, testCase.password).click()
+                cy.getLoginError().then(($p) => {
+                    expect($p.get(0).innerText).to.include(testCase.response)
+                })
             })
         })
 
         it('Login Successful', () => {
-            cy.get('#ember8').type('example@example.com')
-            cy.get('#ember10').type('password')
-            cy.get('#ember12 > span').click()
+            cy.fillLogin(credentials.email, credentials.password).click()
             cy.wait(1000)
-            cy.url().should('eq', 'http://localhost:2368/ghost/#/site')
+            cy.url().should(($url) => {
+                expect($url).to.contain('/ghost/#/site')
+            })
         })
     })
     context('Admin Page Tests', () => {
         beforeEach(() => {
-            cy.get('#ember8').type('example@example.com')
-            cy.get('#ember10').type('password')
-            cy.get('#ember12 > span').click()
+            cy.fillLogin(credentials.email, credentials.password).click()
             cy.wait(1000)
         })
         context('Create Post', () => {
-            it('Start Post', () => {
-                cy.get('a[title="New post"').click()
-                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Test')
-                cy.get('.koenig-editor__editor.__mobiledoc-editor').type('t')
+            beforeEach(() => {
+                cy.goToNewPost()
+                cy.typeTitle(faker.lorem.word())
+                cy.wait(500)
+                cy.focusOnContents()
             })
-            it('Continue Post', () => {
-                cy.get('a[href="#/posts/"]').first().click()
-                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
-                cy.get('.koenig-editor__editor.__mobiledoc-editor').clear().type('test')
-                cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
-                cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
-                cy.get('.gh-notification-title').then(($title) => {
-                    expect($title.get(0).innerText).to.include('Published')
+            validTitleLens.forEach(len => {
+                it(`Create valid post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.goToPostsPage()
+                    cy.clickOnFirstPost()
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.typeTitle(title)
+                    cy.clickOnPublish()
+                    cy.getNotification().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Published')
+                    })
                 })
             })
-            it('Start Invalid Post', () => {
-                cy.get('a[title="New post"').click()
-                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Test')
-                cy.get('.koenig-editor__editor.__mobiledoc-editor').type('t')
-            })
-            it('Continue Invalid Post', () => {
-                cy.get('a[href="#/posts/"]').first().click()
-                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
-                cy.get('.koenig-editor__editor.__mobiledoc-editor').clear().type('test')
-                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Testjckdksajsdkjasdjkdfskjbsdfkvbjsdnfvnjsdkjfvbhsbdd;aksdcn;jabsdckjl; klvcn lksndc ;lnxsdavjkasddvjkasdvkjnasjew;jvnw;jvnd;wkldsnvkdnsf;vlnfjdv;sdjfvn;sdjf vnsdjndvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvadsf vsdv sdv sdf vsdf gfs fdtgerynhglksdca')
-                cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
-                cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
-                cy.get('.gh-alert-content').then(($title) => {
-                    expect($title.get(0).innerText).to.include('Saving failed')
+            invalidTitleLens.forEach(len => {
+                it(`Create invalid post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.goToPostsPage()
+                    cy.clickOnFirstPost()
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.typeTitle(title)
+                    cy.clickOnPublish()
+                    cy.getAlert().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Saving failed')
+                    })
                 })
-            })
+            }) 
         })
         context('Edit Post', () => {
             beforeEach(() => {
-                cy.get('a.ember-view[title="Published"]').click()
-                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+                cy.goToPublishedPage()
+                cy.clickOnFirstPost()
             })
-            it('Edit Valid Post', () => {
-                cy.get('.koenig-editor__editor.__mobiledoc-editor').clear().type('edited test')
-                cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
-                cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
-                cy.get('.gh-notification-title').then(($title) => {
-                    expect($title.get(0).innerText).to.include('Updated')
+            validTitleLens.forEach(len => {
+                it(`Edit Valid Post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.typeTitle(title)
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.clickOnPublish()
+                    cy.getNotification().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Updated')
+                    })
                 })
             })
-            it('Edit Invalid Post', () => {
-                cy.get('textarea.gh-editor-title.ember-text-area.gh-input.ember-view').clear().type('Testjckdksajsdkjasdjkdfskjbsdfkvbjsdnfvnjsdkjfvbhsbdd;aksdcn;jabsdckjl; klvcn lksndc ;lnxsdavjkasddvjkasdvkjnasjew;jvnw;jvnd;wkldsnvkdnsf;vlnfjdv;sdjfvn;sdjf vnsdjndvnsakdjn ;asnd lansdlkjajsdbkcbasdkjcnj;asdnc;jasndkbhasdjcnadsncasjbvadsf vsdv sdv sdf vsdf gfs fdtgerynhglksdca')
-                cy.get('.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger').click()
-                cy.get('.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view').click()
-                cy.get('.gh-alert-content').then(($title) => {
-                    expect($title.get(0).innerText).to.include('Update failed')
+            invalidTitleLens.forEach(len => {
+                it(`Edit Invalid Post with title of length ${len}`, () => {
+                    let title = faker.lorem.words(len)
+                    title = (title.length > len) ? title.substring(0, len) : title
+                    cy.typeTitle(title)
+                    cy.typeContents(faker.lorem.sentence())
+                    cy.clickOnPublish()
+                    cy.getAlert().then(($title) => {
+                        expect($title.get(0).innerText).to.include('Update failed')
+                    })
+                })
+            })
+        })
+        context('Save as Draft', () =>{
+            beforeEach(() => {
+                cy.goToNewPost()
+                cy.typeTitle(faker.lorem.word())
+                cy.focusOnContents()
+            })
+            validTitleLens.forEach(len => {
+                it(`Save as draft post with title of length ${len}`, () => {
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/postContents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+                    cy.request(options).then(response => {
+                         let title = response.body.title
+                         title = (title.length > len) ? title.substring(0, len) : title
+                         cy.goToPostsPage()
+                         cy.clickOnFirstPost()
+                         cy.typeContents(response.body.contents)
+                         cy.typeTitle(title)
+                         cy.clickOnReturnButton()
+                         cy.getFirstPostTitle().then(($title) => {
+                             expect($title.get(0).innerText).to.include(title)
+                         })
+                    })
+                })
+            })
+            invalidTitleLens.forEach(len => {
+                it(`Fail to save as draft post with title of length ${len}`, () => {
+                    const options = {
+                        "url": 'https://my.api.mockaroo.com/postContents.json',
+                        "method": "GET",
+                        "headers": {
+                            "X-API-Key": "28d0f660"
+                        }
+                    }
+                    cy.request(options).then(response => {
+                         let title = response.body.title
+                         title = (title.length > len) ? title.substring(0, len) : title
+                         cy.goToPostsPage()
+                         cy.clickOnFirstPost()
+                         cy.typeContents(response.body.contents)
+                         cy.typeTitle(title)
+                         cy.clickOnReturnButton()
+                         cy.url().should(($url) => {
+                            expect($url).not.to.contain('/ghost/#/posts')
+                        })
+                    })
                 })
             })
         })
         context('Delete Post', () => {
             beforeEach(() => {
-                cy.get('a.ember-view[title="Published"]').click()
-                cy.get('a.ember-view.permalink.gh-list-data.gh-post-list-title').filter(':visible').first().click({force: true})
+                cy.goToPublishedPage()
+                cy.clickOnFirstPost()
             })
             it('Cancel Delete Post', () => {
-                cy.get('button.post-settings').click()
-                cy.get('button.gh-btn.gh-btn-hover-red.gh-btn-icon.settings-menu-delete-button').click()
-                cy.get('button.gh-btn[data-ember-action=""]').last().click()
+                cy.clickOnDelete()
+                cy.clickOnCancel()
             })
             it('Delete Post', () => {
-                cy.get('button.post-settings').click()
-                cy.get('button.gh-btn.gh-btn-hover-red.gh-btn-icon.settings-menu-delete-button').click()
-                cy.get('button.gh-btn.gh-btn-red.gh-btn-icon.ember-view').first().click()
-                cy.url().should('eq', 'http://localhost:2368/ghost/#/posts?type=published')
+                cy.clickOnDelete()
+                cy.clickOnAccept()
+                cy.url().should(($url) => {
+                    expect($url).to.contain('/ghost/#/posts?type=published')
+                })
             })
         })
         context('Logout', () => {
             it('Logout Ghost', () => {
-                cy.get('.gh-user-email').click()
-                cy.get('.dropdown-item.user-menu-signout.ember-view').click()
-                cy.url().should('eq', 'http://localhost:2368/__/#/signin')
+                cy.clickOnLogout()
+                cy.url().should(($url) => {
+                    expect($url).to.contain('/#/signin')
+                })
             })
         })
     })

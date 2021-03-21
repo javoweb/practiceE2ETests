@@ -1,5 +1,6 @@
 {
     "projectId":"Registration-example",
-    "baseUrl": "http://localhost:2368/",
-    "chromeWebSecurity": false
+    "baseUrl": "http://54.88.99.50/",
+    "chromeWebSecurity": false,
+    "defaultCommandTimeout": 8000
 }
