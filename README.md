@@ -81,7 +81,7 @@ Nota: Si presenta problemas en la ejecución del script debe revisar los respect
 
 `node index.js`
 
-## Pruebas aleatorioas con Monkey Cypress
+## Pruebas aleatorias con Monkey Cypress
 
 Ir a la carpeta del subproyecto: `cd monkey_cypress`
 
