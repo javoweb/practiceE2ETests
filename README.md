@@ -1,6 +1,5 @@
 # practiceE2ETests
 
-=======
 Pruebas E2E utilizando Kraken y Cypress. Entrega en equipo. MISO Pruebas automatizadas de software
 
 ## Integrantes
@@ -10,8 +9,9 @@ Pruebas E2E utilizando Kraken y Cypress. Entrega en equipo. MISO Pruebas automat
 | Gonzalo Tixilima | g.tixilima@uniandes.edu.co |
 
 
+## Pruebas e2e con datos aleatorios
 
-## Escenarios de Prueba
+### Escenarios de Prueba
 | # | Funcionalidad | Escenario                                       | Estrategia |
 | - | ------------- | ----------------------------------------------- | ---------- |
 | 1 | Login         | Ingresa datos inválidos                         | a priori   |
@@ -38,7 +38,6 @@ Pruebas E2E utilizando Kraken y Cypress. Entrega en equipo. MISO Pruebas automat
 | 18 | Editar Tag  | Edita Tag con datos válidos                    | aleatorio  dinámico |   
 | 19 | Editar Tag   | Edita Tag con título con más de 191 caracteres | aleatorio  dinámico |
 
-## Código semana 7
 
 ### Instalación
 
@@ -58,11 +57,7 @@ Las credenciales del admin de ghost deben llenarse en el archivo `cypress/fixtur
 
 `cd cypress`
 
-`cypress run ghost`
-
-`cypress run ghostTestPage`
-
-`cypress run ghostTestTag`
+`cypress run`
 
 ## Pruebas VRT
 * Para ejecutar la rutina completa de prueba regresión y generación de reportes VRT, debe siturse en la carpeta raíz de este proyecto "practiceE2ETest" y ejecutar el script: sh run_kraken.sh
