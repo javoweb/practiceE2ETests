@@ -1,6 +1,6 @@
 # practiceE2ETests
 
-Pruebas E2E utilizando Kraken y Cypress. Entrega en equipo. MISO Pruebas automatizadas de software
+Estrategia de pruebas de la Aplicación de blogging [Ghost](https://ghost.org/). Detalles de la estrategia puede ser encontrado en el [Wiki](https://github.com/javoweb/practiceE2ETests/wiki)
 
 ## Integrantes
 | Nombre           | Correo                     |
